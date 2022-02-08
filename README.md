@@ -8,6 +8,7 @@ A Wordle clone as a console application, written in Rust (Wordle + rs = Worldler
 Command line arguments:
 - Word length: default is 5.
 - Guesses must be real words: default is true.
+- 
 For example, to play with 6-letter words and allow fake words as guesses:
 
 % cargo run wordlers 6 false

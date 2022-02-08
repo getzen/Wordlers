@@ -5,6 +5,7 @@ Words from Popular.txt at https://github.com/dolph/dictionary
 
 To-do:
 - Highlight the exact/present letters in letters_available.
+- Possibly switch to ansi-term from conosle to get colored letter backgrounds.
 */
 
 use std::{io, env};

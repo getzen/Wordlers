@@ -5,13 +5,11 @@ Words from Popular.txt at https://github.com/dolph/dictionary
 
 To-do:
 - Highlight the exact/present letters in letters_available.
-- Possibly switch to ansi-term from conosle to get colored letter backgrounds.
 */
 
 use std::{io, env};
-
 use console::Term;
-use console::style;
+use ansi_term::Color::{Fixed};
 
 mod game_state; // name of file
 use game_state::GameState; // name of file :: struct name
@@ -19,9 +17,11 @@ use game_state::GameState; // name of file :: struct name
 mod words;
 use words::Words;
 
-// Console color. See this page for color listing:
+// Console colors. See this page for color listing:
 // https://www.ditig.com/256-colors-cheat-sheet
-const ORANGE: u8 = 214;
+const EXACT_COLOR: u8 = 70;
+const PRESENT_COLOR: u8 = 248;
+const FORE_COLOR: u8 = 0;
 
 
 fn main() {
@@ -96,9 +96,10 @@ impl Game {
     }
 
     fn print_app_name(&self) {
-        println!("{}{}",
-        style("=== Wordle").green(),
-        style("rs ===").color256(ORANGE));
+        println!("{}{}{}",
+        Fixed(PRESENT_COLOR).paint("=== "),
+        Fixed(EXACT_COLOR).paint("Wordlers"),
+        Fixed(PRESENT_COLOR).paint(" ==="));
     }
 
     fn enter_guess_loop(&mut self) {
@@ -112,7 +113,7 @@ impl Game {
 
             if self.state.guesses_must_be_words {
                 if !self.word_list.contains(&guess.to_lowercase()) {
-                    println!("Guess must be a valid word.");
+                    println!(">>> Guess must be a valid word.");
                     continue;
                 }
             }
@@ -127,9 +128,11 @@ impl Game {
             // Clear the term and print the results.
             Term::stdout().clear_screen().unwrap();
             self.print_app_name();
-            println!("{}orrect letter and position\n{}etter present but wrong position\n",
-            style("C").green().underlined(),
-            style("L").color256(ORANGE));
+  
+
+            println!("{}orrect letter and position. {}etter present but wrong position\n",
+            Fixed(FORE_COLOR).on(Fixed(EXACT_COLOR)).paint("C"),
+            Fixed(FORE_COLOR).on(Fixed(PRESENT_COLOR)).paint("L"));
 
             for r in &self.state.results {
                 println!("{}", r);

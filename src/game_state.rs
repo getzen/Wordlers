@@ -1,7 +1,7 @@
 // GameState
 
-use console::style;
-use crate::ORANGE;
+use ansi_term::Color::Fixed;
+use crate::{EXACT_COLOR, PRESENT_COLOR, FORE_COLOR};
 
 pub struct GameState {
     pub word_length: usize,
@@ -102,11 +102,13 @@ impl GameState {
             let slice = &guess[i..end];
             // 'exact' and 'present' results are formatted using the 'console' crate styling.
             if exact_indices.contains(&i) {
-                let text = format!("{}", style(&slice).green().underlined());
+                let text = format!("{}",
+                Fixed(FORE_COLOR).on(Fixed(EXACT_COLOR)).paint(&*slice));
                 result.push_str(&text);
             }
             else if present_indices.contains(&i) {
-                let text = format!("{}", style(&slice).color256(ORANGE));
+                let text = format!("{}",
+                Fixed(FORE_COLOR).on(Fixed(PRESENT_COLOR)).paint(&*slice));
                 result.push_str(&text);
             }
             else

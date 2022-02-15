@@ -38,6 +38,8 @@ fn main() {
             - Guesses must be real words: default is true.
             For example, to play with 6-letter words and allow fake words as guesses:
             % cargo run wordlers 6 false
+
+            Type 'q' or 'quit' to exit the game.
             ";
             println!("{}", &help_str);
             std::process::exit(0);
@@ -106,6 +108,10 @@ impl Game {
         while self.state.guesses_remaining() > 0 {
             // Get user's guess.
             let guess = self.get_guess();
+
+            if guess == "Q" || guess == "QUIT" {
+                std::process::exit(0);
+            }
             if guess.len() != self.state.word_length {
                 println!("Guess must be {} letters.", self.state.word_length);
                 continue;

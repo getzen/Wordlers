@@ -110,14 +110,13 @@ impl Game {
                 println!("Guess must be {} letters.", self.state.word_length);
                 continue;
             }
-
+            // Is guess a valid word?
             if self.state.guesses_must_be_words {
                 if !self.word_list.contains(&guess.to_lowercase()) {
                     println!(">>> Guess must be a valid word.");
                     continue;
                 }
             }
-
             // Determine the result.
             let (exact, present) = self.state.match_guess_to_solution(&guess);
             let result = self.state.create_result(&guess, &exact, &present);
@@ -128,22 +127,20 @@ impl Game {
             // Clear the term and print the results.
             Term::stdout().clear_screen().unwrap();
             self.print_app_name();
-  
 
-            println!("{}orrect letter and position. {}etter present but wrong position\n",
+            println!("{}orrect letter and position. {}etter present but wrong position.\n",
             Fixed(FORE_COLOR).on(Fixed(EXACT_COLOR)).paint("C"),
             Fixed(FORE_COLOR).on(Fixed(PRESENT_COLOR)).paint("L"));
 
             for r in &self.state.results {
                 println!("{}", r);
             }
-
             // Check for win.
             if exact.len() == self.state.word_length {
                 println!("*** Solved. Well done! ***\n");
                 break
             }
-
+            // Check for game over.
             if self.state.guesses_remaining() == 0 {
                 println!("\nSorry, the word was: {}.\nGame over.\n", self.state.solution);
             }

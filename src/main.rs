@@ -2,9 +2,6 @@
 Wordlers
 
 Words from Popular.txt at https://github.com/dolph/dictionary
-
-To-do:
-- Highlight the exact/present letters in letters_available.
 */
 
 use std::{io, env};

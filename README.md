@@ -1,5 +1,5 @@
 # Wordlers
-A Wordle clone as a console application, written in Rust (Wordle + rs = Worldlers).
+A Wordle clone as a console application, written in Rust (Wordle + rs = Wordlers).
 
 After downloading and assuming Rust is already installed:
 `% cargo run`
